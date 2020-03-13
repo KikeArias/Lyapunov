@@ -1,0 +1,23 @@
+
+DATOS DE ENTRADA
+================
+N=3
+NN=12
+v[1]=0.010000 v[2]=-0.010000 pp=1.000000 qq=3.000000 d=0.154000 z1=0.095000
+norbid=100 nporbid=512 iorb=2
+emin=0.000000 emax=1.000000 npx=100
+fmin=0.000000 fimax=6.283200 npy=100
+
+============
+EN EJECUCION
+============
+h=0.011156 iorb=256 nstep=51200
+Entra iii=0 e=0.000000
+Entra jjj=0
+fi=0.000000 h=0.011156
+Entra jjj=1
+fi=0.062832 h=0.011156
+
+=============
+FIN EJECUCION
+=============

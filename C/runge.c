@@ -1,13 +1,15 @@
-int runge (int n, double *y, double *f, double *x, double h,int *m,double *phi, double *savey)
+#include "memoryfun.h"
+
+int runge (int n, double *y, double *f, double *x, double h,int m,double *phi, double *savey)
 {
-int j;
+int i,j;
 int xaux;
 
 xaux=*x;
 
-switch (*m)
+switch (m)
        {
-       case 1: // Paso 1
+       case 1: // Paso a
               break;
        case 2: // Paso 2
               for (j=1;j<=n;j++)
@@ -41,5 +43,5 @@ switch (*m)
               break;
        }
 
-return 0; 
+return 0;
 }

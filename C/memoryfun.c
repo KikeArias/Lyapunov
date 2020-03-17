@@ -58,3 +58,11 @@ int *imatrix (int nfh, int nch)
         if (!m) print_error("imatriz","error de reserve de espacio 1");
         return m;
 }
+
+int dimprimir(double *v,int n)
+{
+int i;
+
+for (i=1;i<=n;i++)
+    printf("%lf\n",v[i]);
+}

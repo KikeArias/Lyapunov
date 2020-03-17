@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 //     12/03/2018
 //     Actualización: 16/03/2020
 
-int N,NN;
+iynt N,NN;
 int i,j; // indices
 int iii,jjj; // indices
 int m; // Variable utilizada para las llamadas a  Runge-Kutta
@@ -51,15 +51,15 @@ salida=fopen(argv[2],"w");
 salida=stdout;
 
 #ifdef DEBUG
-//fprintf(salida,"\nDATOS DE ENTRADA\n");
-//fprintf(salida,"================\n");
-#endif
+fprintf(salida,"\nDATOS DE ENTRADA\n");
+fprintf(salida,"================\n");
 fscanf(entrada,"%d",&N);
 fscanf(entrada,"%d",&NN);
+#endif
 
 #ifdef DEBUG
-//fprintf(salida,"N=%d\n",N);
-//fprintf(salida,"NN=%d\n",NN);
+fprintf(salida,"N=%d\n",N);
+fprintf(salida,"NN=%d\n",NN);
 #endif
 
 b=4;
@@ -89,10 +89,10 @@ fclose(entrada);
 
 
 #ifdef DEBUG
-//fprintf(salida,"v[1]=%lf v[2]=%lf pp=%lf qq=%lf d=%lf z1=%lf\n",v[1],v[2],pp,qq,d,z1);
-//fprintf(salida,"norbid=%d nporbid=%d iorb=%d\n",norbit,nporbit,iorb);
-//fprintf(salida,"emin=%lf emax=%lf npx=%d\n",emin,emax,npx);
-//fprintf(salida,"fmin=%lf fimax=%lf npy=%d\n",fimin,fimax,npy);
+fprintf(salida,"v[1]=%lf v[2]=%lf pp=%lf qq=%lf d=%lf z1=%lf\n",v[1],v[2],pp,qq,d,z1);
+fprintf(salida,"norbid=%d nporbid=%d iorb=%d\n",norbit,nporbit,iorb);
+fprintf(salida,"emin=%lf emax=%lf npx=%d\n",emin,emax,npx);
+fprintf(salida,"fmin=%lf fimax=%lf npy=%d\n",fimin,fimax,npy);
 #endif
 
 h=peri/(1.*nporbit);
@@ -104,25 +104,26 @@ iorb=nporbit/iorb;
 fprintf(salida,"\n============\n");
 fprintf(salida,"EN EJECUCION\n");
 fprintf(salida,"============\n");
-//fprintf(salida,"h=%lf iorb=%d nstep=%d\n",h,iorb,nstep);
+fprintf(salida,"h=%lf iorb=%d nstep=%d\n",h,iorb,nstep);
 #endif
-icount=0;
 
-for (iii=0;iii<=npx;iii++)
+//for (iii=0;iii<=npx;iii++)
+for (iii=0;iii<=0.0001;iii++)
     {
     e=emin+iii*(emax-emin)/(1.0*npx);
     #ifdef DEBUG
-//    fprintf(salida,"Entra iii=%i e=%lf\n",iii,e);
+    fprintf(salida,"Entra iii=%i e=%lf\n",iii,e);
     #endif
-    for (jjj=0;jjj<=npy;jjj++)
+//    for (jjj=0;jjj<=npy;jjj++)
+    for (jjj=0;jjj<=3;jjj++)
         {
         #ifdef DEBUG
-//        fprintf(salida,"Entra jjj=%i\n",jjj);
+        fprintf(salida,"Entra jjj=%i\n",jjj);
         #endif
         fi=fimin+jjj*(fimax-fimin)/(1.0*npy);
         h=peri/(1.0*nporbit);
         #ifdef DEBUG
-//        fprintf(salida,"fi=%lf h=%lf\n",fi,h);
+        fprintf(salida,"fi=%lf h=%lf\n",fi,h);
         #endif
         // INICIALIZAR VARIABLES
         v[3]=0;
@@ -131,10 +132,10 @@ for (iii=0;iii<=npx;iii++)
             v[i]=0;
             }
         #ifdef DEBUG
-//        for (i=1;i<=NN;i++)
-//            {
-//            fprintf(salida,"v[%d]=%lf\n",i,v[i]);
-//            }
+        for (i=1;i<=NN;i++)
+            {
+            fprintf(salida,"v[%d]=%lf\n",i,v[i]);
+            }
         #endif
         for (i=1;i<=N;i++)
             {
@@ -144,57 +145,46 @@ for (iii=0;iii<=npx;iii++)
             gsc[i]=0.0;
             }
         #ifdef DEBUG
-//        for (i=1;i<=N;i++)
-//            {
-//            fprintf(salida,"v[%d]=%lf\n",(N+1)*i,v[(N+1)*i]);
-//            fprintf(salida,"cum[%d]=%lf\n",i,cum[i]);
-//            fprintf(salida,"znorm[%d]=%lf\n",i,znorm[i]);
-//            fprintf(salida,"gsc[%d]=%lf\n",i,gsc[i]);
- //           }
+        for (i=1;i<=N;i++)
+            {
+            fprintf(salida,"v[%d]=%lf\n",(N+1)*i,v[(N+1)*i]);
+            fprintf(salida,"cum[%d]=%lf\n",i,cum[i]);
+            fprintf(salida,"znorm[%d]=%lf\n",i,znorm[i]);
+            fprintf(salida,"gsc[%d]=%lf\n",i,gsc[i]);
+            }
         #endif
         x=0;
+        icount=0;
         #ifdef DEBUG
-//        fprintf(salida,"x=%lf\n",x);
+        fprintf(salida,"x=%lf\n",x);
         #endif
         for (m=1;m<=5;m++)
             {
-            runge(NN,v,f,&x,h,m,phi,savey); 
-            fprintf(salida,"k=%i\n",m);
-            if (m==5) 
+            runge(NN,v,f,x,h,m,phi,savey); 
+            if (m!=5) 
               {
-              return 0;
               icount=icount+1;
-              fprintf(salida,"Entro aqui icount=%i iorb=%i nstep=%i x=%lf\n",icount,iorb,nstep,x);
-              fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
               if ((icount%iorb)==0)
                  {
-                 // En elc aso de que el módulo sea igual a cero se llama a f_clambda
                  f_clambda(NN,znorm,v,gsc,cum,x,clambda);
                  }
+              /* ¿Hemos llegado hasta el final de los pasos establecidos */
               if (icount==nstep) 
                  {
-                 /* Si hemos llegado hasta el final de los pasos establecidos */
                  /* Imprimir valores */
-                 fprintf(salida,"icount=%i==nstep=%i\n",icount,nstep);
-                 fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
                  icount=0;
                  }
               }
             else /* Si m=5 */
                {  
                /* Llamar a Duffing*/
-               fprintf(salida,"k=%i\n",m);
-               duffing(v,f,b,d,z1,e,pp,qq,fi,w);
-               dimprimir(f,NN);
                }
-            //fprintf(salida,"Como el módulo no es igual a cero pasamos aqui\n");
             }
-        }
     }
 fprintf(salida,"\n=============\n");
 fprintf(salida,"FIN EJECUCION\n");
 fprintf(salida,"=============\n");
 
-fclose(salida);
+//fclose(salida);
 return 0;
 }

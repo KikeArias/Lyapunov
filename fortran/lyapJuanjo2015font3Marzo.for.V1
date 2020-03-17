@@ -34,7 +34,10 @@ c     Abrimos fichero lectura datos entrada
       READ(1,*,end=205)fmin,fimax,npy
  205  CLOSE(1)
       open(5,file='lyamap.dat')
-      
+      print *,v(1),v(2),pp,qq,d,z1
+      print *,norbit,nporbit,iorb
+      print *,emin,emax,npx
+      print *,fimin,fimax,npy
 c     La mandanga del fichero 10, sustituye a la salida por pantalla
 
 c     open(10,file='repetido.dat')
@@ -55,31 +58,43 @@ c      open(5,file='lyamap.dat')
 c      h=peri/(1.*nporbit)
 c     nstep=norbit*nporbit
 C      Do 235 iii=0,npx
-      Do 235 iii=0,npx
+      Do 235 iii=0,0.0001
       e=emin+iii*(emax-emin)/(1.*npx)
-      Do 234 jjj=0,npy
+      print *,"Entra iii=",iii,"e=",e
+c      Do 234 jjj=0,npy
+      Do 234 jjj=0,3
+      print *,"Entra jjjj=",jjj
       fi=fimin+jjj*(fimax-fimin)/(1.*npy)
       h=peri/(1.*nporbit)
+      print *,"fi=",fi,"h=",h
 c     INICIALIZAR VARIABLES
-      v(3)=0.0
+      v(3)=0.
       do 102 i=N+1,NN
        v(i)=0.
  102  continue
+      do 103 i=1,NN
+       print *,"v(",i,")=",v(i)
+ 103  continue
       do 212 i=1,N
        v((N+1)*i)=1.
        cum(i)=0.
        znorm(i)=0.
        gsc(i)=0.
  212  continue
+      do 213 i=1,N
+       print *,"v(",(N+1)*i,")=",1.
+       print *,"cum(",i,")=",0.
+       print *,"znorm(",i,")=",0.
+       print *,"gsc(",i,")=",0.
+ 213  continue
       x=0.
+      print *,"x=",x
 c     Llamada a la funcion RUNGE-KUTTA de cuarto orden
   11  k=runge(NN, v, f, x, h )
-      print *,"k=",k
 c     si k#1,calculo de los valores de las derivadas....
       if (k.ne.1) go to 13
-      print *,"k=",k
 
-C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
+CC     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
       f(1)= v(2)
       f(2)=v(1)-b*v(1)**3-d*v(2)+z1*DCOS(v(3))
      *-b*e*(v(1)**3)*DCOS(pp*v(3)/qq+fi)
@@ -91,16 +106,13 @@ C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
      *-z1*DSIN(v(3))*v(i+10)
       f(i+10)= 0.
   101 continue
-      do i=1,NN
-         print *,f(i)
-      enddo
-      go to 11
-  13  stop
-      icount=icount+1
+C      
+C      go to 11
+  13  icount=icount+1
       if (mod(icount,iorb).eq.0) then
       znorm(1)=0.
       do 30 j=1,n
-	znorm(1)=znorm(1)+v(n*j+1)**2
+         znorm(1)=znorm(1)+v(n*j+1)**2
   30  continue
       znorm(1)=sqrt(znorm(1))
       do 40 j=1,n
@@ -134,7 +146,7 @@ c        cum(k)=cum(k)+log(znorm(k))/log(2.)
       endif
       if (icount.eq.nstep) then
 c     write(10,204)e,fi,clambda(1),clambda(2)
-C      write(*,204)e,fi,clambda(1),clambda(2)
+      write(*,204)e,fi,clambda(1),clambda(2)
       write(5,204)e,fi,clambda(1),clambda(2)
       icount=0
       else
@@ -143,53 +155,53 @@ C      write(*,204)e,fi,clambda(1),clambda(2)
   234 continue
   235 continue
       close(5)
-c      write(*,*)'Programa finalizado'
+      write(*,*)'Programa finalizado'
 c     Formatos de entrada y salida.....
-c 202 format(I7,f10.2,2e12.5,1e10.3)
-c 202 format(4f24.7)
-c 204 format(2f12.5,2e12.5)
+ 202 format(I7,f10.2,2e12.5,1e10.3)
+ 202 format(4f24.7)
+ 204 format(2f12.5,2e12.5)
 c Cambiamos formato de salida format(2f12.5,2e12.5)
 c Cambiamos formato de salida format(2f12.5,2e16.5)
 c 204 format(2f12.5,2e12.5)
 c 204 format(2f14.7,2f24.12)
-  204 format(2f14.5,2e16.5)
+C  204 format(2f14.5,2e16.5)
       end
-
-      function runge (n, y, f, x, h )
-      implicit real*8(a-h,o-z)
-      integer runge
-      dimension phi(50),savey(50), y(n), f(n)
-      data m/0/
-      m=m+1
-      go to (1,2,3,4,5),m
-c     paso 1
-  1   runge=1
-      return
-c     paso 2
-  2   do 22 j=1,n
-      savey(j)=y(j)
-      phi(j)=f(j)
-  22  y(j)=savey(j)+0.5*h*f(j)
-      x=x+0.5*h
-      runge=1
-      return
-c     paso 3
-   3  do 33 j=1,n
-      phi(j)=phi(j)+2.0*f(j)
-  33  y(j)=savey(j)+0.5*h*f(j)
-      runge=1
-      return
-c     paso 4
-   4  do 44 j=1,n
-      phi(j)=phi(j)+2.0*f(j)
-  44  y(j)=savey(j)+h*f(j)
-      x=x+0.5*h
-      runge=1
-      return
-c     paso 5
-   5  do 55 j=1,n
-  55  y(j)=savey(j)+(phi(j)+f(j))*h/6.0
-      m=0.
-      runge=0.
-      return
-      end
+C
+C      function runge (n, y, f, x, h )
+C      implicit real*8(a-h,o-z)
+C      integer runge
+C      dimension phi(50),savey(50), y(n), f(n)
+C      data m/0/
+C      m=m+1
+C      go to (1,2,3,4,5),m
+Cc     paso 1
+C  1   runge=1
+C      return
+Cc     paso 2
+C  2   do 22 j=1,n
+C      savey(j)=y(j)
+C      phi(j)=f(j)
+C  22  y(j)=savey(j)+0.5*h*f(j)
+C      x=x+0.5*h
+C      runge=1
+C      return
+Cc     paso 3
+C   3  do 33 j=1,n
+C      phi(j)=phi(j)+2.0*f(j)
+C  33  y(j)=savey(j)+0.5*h*f(j)
+C      runge=1
+C      return
+Cc     paso 4
+C   4  do 44 j=1,n
+C      phi(j)=phi(j)+2.0*f(j)
+C  44  y(j)=savey(j)+h*f(j)
+C      x=x+0.5*h
+C      runge=1
+C      return
+Cc     paso 5
+C   5  do 55 j=1,n
+C  55  y(j)=savey(j)+(phi(j)+f(j))*h/6.0
+C      m=0.
+C      runge=0.
+C      return
+CC      end

@@ -1,4 +1,4 @@
-CC= ifort
+CC= gfortran
 LIBS = 
 
 lyap: lyapJuanjo2015font3Marzo.for

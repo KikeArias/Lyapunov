@@ -1,0 +1,27 @@
+16/03/2020
+
+Hasta justo la llamada a Runge-Kutta todo funciona correctamente.
+
+Se crea el fichero main.c.estructura1 con la estructura que representaría el código en Fortran.
+A partir de esa estructura se reflexiona cómo eliminar las diferentes llamadas a rung con un goto y surge el 
+fichero main.c.estructura2 que es el que se va a seguir.
+
+
+17/03/2020
+
+Hoy ya he completado el código tanto introduciendo Duffing como el cálculo de clambda.
+
+No obstante, no funciona como se espera.
+
+En este momento me he quedado evaluando Duffing puesto que me he dado cuenta que algún cálculo no es correcto. 
+
+Sin embargo he de decir que el código en Fortran funciona de casualidad puesto que hay variables que no están 
+inicializadas y además se usan con un valor que se desconoce cuál puede ser. Este es el caso de phi y savey.
+
+Además, no sé si será cosa de que el Duffing no funciona correctamente todavía, pero no me alcanza el número total 
+de pasos nstep con lo que no me imprime los valores. 
+
+Seguiré trabajando en ello.
+
+
+

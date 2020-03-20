@@ -46,16 +46,19 @@ if (argc!=3)
    }
 */
     
-entrada=fopen(argv[1],"r");
-salida=fopen(argv[2],"w");
+//entrada=fopen(argv[1],"r");
+//entrada=fopen("entrada.txt","r");
+//salida=fopen(argv[2],"w");
 salida=stdout;
 
 #ifdef DEBUG
 //fprintf(salida,"\nDATOS DE ENTRADA\n");
 //fprintf(salida,"================\n");
 #endif
-fscanf(entrada,"%d",&N);
-fscanf(entrada,"%d",&NN);
+//fscanf(entrada,"%d",&N);
+//fscanf(entrada,"%d",&NN);
+N=3;
+NN=12;
 
 #ifdef DEBUG
 //fprintf(salida,"N=%d\n",N);
@@ -80,12 +83,26 @@ savey=dvector(NN+1);
 
 
 // Lectura de fichero de entrada
-fscanf(entrada,"%lf %lf %lf %lf %lf %lf\n",&v[1],&v[2],&pp,&qq,&d,&z1);
-fscanf(entrada,"%d %d %d\n",&norbit,&nporbit,&iorb);
-fscanf(entrada,"%lf %lf %d\n",&emin,&emax,&npx);
-fscanf(entrada,"%lf %lf %d\n",&fimin,&fimax,&npy);
-
-fclose(entrada);
+//fscanf(entrada,"%lf %lf %lf %lf %lf %lf\n",&v[1],&v[2],&pp,&qq,&d,&z1);
+//fscanf(entrada,"%d %d %d\n",&norbit,&nporbit,&iorb);
+//fscanf(entrada,"%lf %lf %d\n",&emin,&emax,&npx);
+//fscanf(entrada,"%lf %lf %d\n",&fimin,&fimax,&npy);
+v[1]=0.01;
+v[2]=-0.01;
+pp=1;
+qq=3;
+d=0.154; 
+z1=0.095;
+norbit=100; 
+nporbit=512; 
+iorb=2;
+emin=0.0; 
+emax=1.0;
+npx=100;
+fimin=0; 
+fimax=6.2832; 
+npy=100;
+//fclose(entrada);
 
 
 #ifdef DEBUG

@@ -23,5 +23,14 @@ de pasos nstep con lo que no me imprime los valores.
 
 Seguiré trabajando en ello.
 
+23/3/2020
+
+Hoy he repasado la ejecución de duffing y ahora parace que sale correcto. Sin embargo, el resultado global no es correcto. 
+
+Los siguientes pasos a dar van a ser:
+.- Parece ser que clambda solo se ejecuta una vez cada 256 veces por lo que, para verificar que duffing está 
+   funcionando correctamente, pararé la ejecución justo a la entrada de clambda.
+.- No sé porqué no se agotan las vueltas que hay que dar con icount para compararse con nstep antes de iniciar 
+una nueva vuelta de jjj y/o iii.
 
 

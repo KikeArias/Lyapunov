@@ -15,6 +15,7 @@ c     P RL 86, 1737 (2001)
       double precision pp,qq,d,z1,e,fi
       double precision emin,emax
       double precision fmin,fimax
+      double precision aux1, aux2, aux3
 c     d=0.154
 c     z1=0.095
       b=4.
@@ -77,7 +78,6 @@ c     Llamada a la funcion RUNGE-KUTTA de cuarto orden
       print *,"k=",k
 c     si k#1,calculo de los valores de las derivadas....
       if (k.ne.1) go to 13
-      print *,"k=",k
 
 C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
       f(1)= v(2)
@@ -90,10 +90,6 @@ C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
      *-d*v(i+7)+((pp/qq)*b*e*(v(1)**3)*DSIN(pp*v(3)/qq+fi))*v(i+10)
      *-z1*DSIN(v(3))*v(i+10)
       f(i+10)= 0.
-  101 continue
-      do i=1,NN
-         print *,f(i)
-      enddo
       go to 11
   13  stop
       icount=icount+1

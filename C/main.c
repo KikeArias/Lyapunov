@@ -116,7 +116,6 @@ h=peri/(1.*nporbit);
 nstep=norbit*nporbit;
 iorb=nporbit/iorb;
 
-
 #ifdef DEBUG
 fprintf(salida,"\n============\n");
 fprintf(salida,"EN EJECUCION\n");
@@ -147,12 +146,6 @@ for (iii=0;iii<=npx;iii++)
             {
             v[i]=0;
             }
-        #ifdef DEBUG
-//        for (i=1;i<=NN;i++)
-//            {
-//            fprintf(salida,"v[%d]=%lf\n",i,v[i]);
-//            }
-        #endif
         for (i=1;i<=N;i++)
             {
             v[(N+1)*i]=1.0;
@@ -160,49 +153,38 @@ for (iii=0;iii<=npx;iii++)
             znorm[i]=0.0;
             gsc[i]=0.0;
             }
-        #ifdef DEBUG
-//        for (i=1;i<=N;i++)
-//            {
-//            fprintf(salida,"v[%d]=%lf\n",(N+1)*i,v[(N+1)*i]);
-//            fprintf(salida,"cum[%d]=%lf\n",i,cum[i]);
-//            fprintf(salida,"znorm[%d]=%lf\n",i,znorm[i]);
-//            fprintf(salida,"gsc[%d]=%lf\n",i,gsc[i]);
- //           }
-        #endif
         x=0;
-        #ifdef DEBUG
-//        fprintf(salida,"x=%lf\n",x);
-        #endif
         for (m=1;m<=5;m++)
             {
             runge(NN,v,f,&x,h,m,phi,savey); 
-            fprintf(salida,"k=%i\n",m);
+            //fprintf(salida,"k=%i\n",m);
             if (m==5) 
               {
-              return 0;
               icount=icount+1;
               fprintf(salida,"Entro aqui icount=%i iorb=%i nstep=%i x=%lf\n",icount,iorb,nstep,x);
-              fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
+              //fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
               if ((icount%iorb)==0)
                  {
-                 // En elc aso de que el módulo sea igual a cero se llama a f_clambda
-                 f_clambda(NN,znorm,v,gsc,cum,x,clambda);
+                 // En elc aso de que el módulo sea igual a cero se llama a f_clambdaa
+                 fprintf(salida,"icount=%d iorb=%d MOD(icount,iorb)=%d\n",icount, iorb,(icount%iorb));
+                 //f_clambda(NN,znorm,v,gsc,cum,x,clambda);
                  }
               if (icount==nstep) 
                  {
                  /* Si hemos llegado hasta el final de los pasos establecidos */
                  /* Imprimir valores */
                  fprintf(salida,"icount=%i==nstep=%i\n",icount,nstep);
-                 fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
+                 //fprintf(salida,"e=%lf fi=%lf clambda[1]=%lf clambda[2]=%lf\n",e,fi,clambda[1],clambda[2]);
                  icount=0;
+                 return 0;
                  }
               }
             else /* Si m=5 */
                {  
                /* Llamar a Duffing*/
-               fprintf(salida,"k=%i\n",m);
+               //fprintf(salida,"k=%i\n",m);
                duffing(v,f,b,d,z1,e,pp,qq,fi,w);
-               dimprimir(f,NN);
+               //dimprimir(f,NN);
                }
             //fprintf(salida,"Como el módulo no es igual a cero pasamos aqui\n");
             }

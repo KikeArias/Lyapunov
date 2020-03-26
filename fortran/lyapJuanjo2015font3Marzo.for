@@ -15,7 +15,6 @@ c     P RL 86, 1737 (2001)
       double precision pp,qq,d,z1,e,fi
       double precision emin,emax
       double precision fmin,fimax
-      double precision aux1, aux2, aux3
 c     d=0.154
 c     z1=0.095
       b=4.
@@ -55,14 +54,13 @@ c     write(*,*)'CALCULANDO'
 c      open(5,file='lyamap.dat')
 c      h=peri/(1.*nporbit)
 c     nstep=norbit*nporbit
-C      Do 235 iii=0,npx
       Do 235 iii=0,npx
       e=emin+iii*(emax-emin)/(1.*npx)
-      Do 234 jjj=0,npy
+      Do 234 jjj=0,npy 
       fi=fimin+jjj*(fimax-fimin)/(1.*npy)
       h=peri/(1.*nporbit)
 c     INICIALIZAR VARIABLES
-      v(3)=0.0
+      v(3)=0.
       do 102 i=N+1,NN
        v(i)=0.
  102  continue
@@ -75,7 +73,6 @@ c     INICIALIZAR VARIABLES
       x=0.
 c     Llamada a la funcion RUNGE-KUTTA de cuarto orden
   11  k=runge(NN, v, f, x, h )
-      print *,"k=",k
 c     si k#1,calculo de los valores de las derivadas....
       if (k.ne.1) go to 13
 
@@ -90,9 +87,10 @@ C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
      *-d*v(i+7)+((pp/qq)*b*e*(v(1)**3)*DSIN(pp*v(3)/qq+fi))*v(i+10)
      *-z1*DSIN(v(3))*v(i+10)
       f(i+10)= 0.
+  101 continue
+      
       go to 11
-  13  stop
-      icount=icount+1
+  13  icount=icount+1
       if (mod(icount,iorb).eq.0) then
       znorm(1)=0.
       do 30 j=1,n
@@ -129,8 +127,9 @@ c        cum(k)=cum(k)+log(znorm(k))/log(2.)
       go to 11
       endif
       if (icount.eq.nstep) then
+      print *,nstep, icount
 c     write(10,204)e,fi,clambda(1),clambda(2)
-C      write(*,204)e,fi,clambda(1),clambda(2)
+      write(*,204)e,fi,clambda(1),clambda(2)
       write(5,204)e,fi,clambda(1),clambda(2)
       icount=0
       else

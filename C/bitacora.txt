@@ -33,4 +33,79 @@ Los siguientes pasos a dar van a ser:
 .- No sé porqué no se agotan las vueltas que hay que dar con icount para compararse con nstep antes de iniciar 
 una nueva vuelta de jjj y/o iii.
 
+26/03/2020
+
+El algoritmo sigue sin funcionar correctamente y es que es muy difícil interpretar correctamente los goto del programa
+original en fortran. No obstante, se propone la estructura3 de planteamiento del algoritmo visto que las otras 
+estructuras o planteamientos habían fallado. 
+
+Esta nueva estructura obliga a reescribir runge introduciendo duffing en su interior. 
+
+Por tanto, los siguientes pasos a realizar son:
+.- Reescribir programa principal con la estructura3
+.- Reescribir runge y/o duffing para adaptarse a la estructura3
+
+Una vez esté esto reescrito seguiremos con las pruebas utilizando gdb.
+
+No he llegado ni siquiera a depurar pues me he dado cuenta que esta estructura3 no funciona correctamente, aunque me 
+ha servido para reescribir runge y duffing.
+
+Creo que una estructura más apropiada es
+
+runge(....);
+icount=icount+1;
+
+while ((icount%iorb!=0) o (icount!=nstep)) 
+     {
+     runge(...);
+     }
+
+/* Cuando sale del while debemos comprobar la causa para llevar a cabo el efecto */
+
+if ((icount%iorb)==0)  /* O ha salido por la condición del módulo */
+   {
+   f_clambda();
+   }
+else /* O ha salido por alcanzar nstep */
+   {
+   imprimir(...);
+   icount=0;
+   }
+
+
+De nuevo, esta estructura4 no acaba de funcionar realmente, pero le he hecho un pequeño ajuste que ha consistido en que se evalua icount==nstep dentro de icount%iorb puesto que sólo se llega ahí si previamente se ha saltado por icount%iorb. Además, sólo pasamos de vuelta en el bucle sí icount==step y por eso la j se modifica sólo ahí. El resultado es:
+
+        x=0;
+
+        runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+        icount=icount+1;
+        while ((icount%iorb)!=0)
+              {
+              runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+              icount=icount+1;
+              printf("WHILE icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
+              }
+
+        /* Cuando salga, debemos saber porqué ha salido para tomar la acción oportuna */       
+        if ((icount%iorb)==0) /* Si sale por que se cumple el mçodulo */
+           {
+           f_clambda(N,znorm,v,gsc,cum,x,clambda);
+           printf("CLAMBDA icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
+           if (icount==nstep) /* Si sale por alcanzar nstep */
+              {
+              /* Imprimir valores y poner icount=0*/
+              printf("IMPRIMIRR icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
+              fprintf(salida,"%lf %lf %lf %lf\n",e,fi,clambda[1],clambda[2]);
+              icount=0;
+              jjj=jjj+1;
+              return 0;
+              }
+           }
+        } /* End if jjj */
+    } /* End if iii */
+
+Lo que se hará a continuación es comprobar que f_clambda funciona correctamente así como Duffing. Hay que tener en cuenta que cuando llegue a f_clambda ya hemos calculado 256 veces runge+duffing. Por tanto:
+.- Antes de fclambda comprobar que las estructuras de datos tienen los datos correctos. En caso negativo, runge y duffing están fallando.
+.- Tracear fclambda una vez runge y duffing sea correcto.
+
 

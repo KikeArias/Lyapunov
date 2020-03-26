@@ -1,0 +1,135 @@
+lyapJuanjo2015font3Marzo.for:139.72:
+
+  234 continue                                                          
+                                                                        1
+Error: End of nonblock DO statement at (1) is interwoven with another DO loop
+lyapJuanjo2015font3Marzo.for:140.72:
+
+  235 continue                                                          
+                                                                        1
+Error: End of nonblock DO statement at (1) is interwoven with another DO loop
+lyapJuanjo2015font3Marzo.for:152.6:
+
+      end                                                               
+      1
+Error: END DO statement expected at (1)
+lyapJuanjo2015font3Marzo.for:154.6:
+
+      function runge (n, y, f, x, h )                                   
+      1
+Error: Unclassifiable statement at (1)
+lyapJuanjo2015font3Marzo.for:155.72:
+
+      implicit real*8(a-h,o-z)                                          
+                                                                        1
+Error: Letter A already has an IMPLICIT type at (1)
+lyapJuanjo2015font3Marzo.for:156.19:
+
+      integer runge                                                     
+                   1
+Error: Symbol 'runge' at (1) already has basic type of INTEGER
+lyapJuanjo2015font3Marzo.for:157.42:
+
+      dimension phi(50),savey(50), y(n), f(n)                           
+                                          1
+Error: Duplicate DIMENSION attribute specified at (1)
+lyapJuanjo2015font3Marzo.for:162.11:
+
+  1   runge=1                                                           
+           1
+Error: 'runge' at (1) is not a variable
+lyapJuanjo2015font3Marzo.for:166.72:
+
+      savey(j)=y(j)                                                     
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:167.72:
+
+      phi(j)=f(j)                                                       
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:168.72:
+
+  22  y(j)=savey(j)+0.5*h*f(j)                                          
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:170.11:
+
+      runge=1                                                           
+           1
+Error: 'runge' at (1) is not a variable
+lyapJuanjo2015font3Marzo.for:173.72:
+
+   3  do 33 j=1,n                                                       
+                                                                        1
+lyapJuanjo2015font3Marzo.for:165.72:
+
+  2   do 22 j=1,n                                                       
+                                                                        2
+Error: Variable 'j' at (1) cannot be redefined inside loop beginning at (2)
+lyapJuanjo2015font3Marzo.for:174.13:
+
+      phi(j)=phi(j)+2.0*f(j)                                            
+             1
+Error: Statement function at (1) is recursive
+lyapJuanjo2015font3Marzo.for:175.72:
+
+  33  y(j)=savey(j)+0.5*h*f(j)                                          
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:176.11:
+
+      runge=1                                                           
+           1
+Error: 'runge' at (1) is not a variable
+lyapJuanjo2015font3Marzo.for:179.72:
+
+   4  do 44 j=1,n                                                       
+                                                                        1
+lyapJuanjo2015font3Marzo.for:173.72:
+
+   3  do 33 j=1,n                                                       
+                                                                        2
+Error: Variable 'j' at (1) cannot be redefined inside loop beginning at (2)
+lyapJuanjo2015font3Marzo.for:180.13:
+
+      phi(j)=phi(j)+2.0*f(j)                                            
+             1
+Error: Statement function at (1) is recursive
+lyapJuanjo2015font3Marzo.for:181.72:
+
+  44  y(j)=savey(j)+h*f(j)                                              
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:183.11:
+
+      runge=1                                                           
+           1
+Error: 'runge' at (1) is not a variable
+lyapJuanjo2015font3Marzo.for:186.72:
+
+   5  do 55 j=1,n                                                       
+                                                                        1
+lyapJuanjo2015font3Marzo.for:179.72:
+
+   4  do 44 j=1,n                                                       
+                                                                        2
+Error: Variable 'j' at (1) cannot be redefined inside loop beginning at (2)
+lyapJuanjo2015font3Marzo.for:187.72:
+
+  55  y(j)=savey(j)+(phi(j)+f(j))*h/6.0                                 
+                                                                        1
+Error: Unexpected STATEMENT FUNCTION statement at (1)
+lyapJuanjo2015font3Marzo.for:189.11:
+
+      runge=0.                                                          
+           1
+Error: 'runge' at (1) is not a variable
+lyapJuanjo2015font3Marzo.for:191.6:
+
+      end                                                               
+      1
+Error: END DO statement expected at (1)
+Error: Unexpected end of file in 'lyapJuanjo2015font3Marzo.for'
+Fatal Error: Error count reached limit of 25.
+make: *** [lyap] Error 1

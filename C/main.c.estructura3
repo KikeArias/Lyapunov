@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 //     Juan Jose Miralles Canals
 //     Enrique Arias Antunez
 //     12/03/2018
-//     Actualización: 26/03/2020
+//     Actualización: 16/03/2020
 
 int N,NN;
 int i,j; // indices
@@ -32,7 +32,7 @@ double emin,emax;
 double fimin,fimax;
 double b,dospi,peri,w,x;
 double h;
-double *p_Duffing; /* Vector con 8 doubles para pasar como parámetros a runge que se los pase a duffing sin 
+double p_Duffing[8]; /* Vector con 8 doubles para pasar como parámetros a runge que se los pase a duffing sin 
                         tener una llamada a la función muy grande */
 int nstep,icount;
  
@@ -78,7 +78,6 @@ gsc=dvector(N+1);
 clambda=dvector(N+1);
 v=dvector(NN+1);
 f=dvector(NN+1);
-p_Duffing=dvector(8);
 
 
 // Lectura de fichero de entrada
@@ -105,8 +104,10 @@ npy=1;
 p_Duffing[0]=b;
 p_Duffing[1]=d;
 p_Duffing[2]=z1;
+p_Duffing[3]=e;
 p_Duffing[4]=pp;
 p_Duffing[5]=qq;
+p_Duffing[6]=fi;
 p_Duffing[7]=w;
 
 h=peri/(1.*nporbit);
@@ -123,13 +124,10 @@ icount=0;
 for (iii=0;iii<=npx;iii++)
     {
     e=emin+iii*(emax-emin)/(1.0*npx);
-//    for (jjj=0;jjj<=npy;jjj)
-    for (jjj=0;jjj<=npy;)
+    for (jjj=0;jjj<=npy;jjj++)
         {
         fi=fimin+jjj*(fimax-fimin)/(1.0*npy);
         h=peri/(1.0*nporbit);
-        p_Duffing[3]=e;
-        p_Duffing[6]=fi;
         // INICIALIZAR VARIABLES
         v[3]=0;
         for (i=N+1;i<=NN;i++)
@@ -144,30 +142,33 @@ for (iii=0;iii<=npx;iii++)
             gsc[i]=0.0;
             }
         x=0;
-
-        runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+        if (iii==1) /* Si es la primera vez que entra se ejecuta la función runge y duffing junta*/
+           {
+           runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+           }
+        /* Cuando salga de runge se ha de ir a 13, esto es, incrementar icount y comprobar MOD(icount,iorb) y
+           comprobar icount==nstep */
         icount=icount+1;
-        while ((icount%iorb)!=0)
-              {
-              runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
-              icount=icount+1;
-              printf("WHILE icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
-              }
-
-        /* Cuando salga, debemos saber porqué ha salido para tomar la acción oportuna */       
-        if ((icount%iorb)==0) /* Si sale por que se cumple el mçodulo */
+        if ((icount%iorb)==0)
            {
            f_clambda(N,znorm,v,gsc,cum,x,clambda);
-           printf("CLAMBDA icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
-           if (icount==nstep) /* Si sale por alcanzar nstep */
-              {
-              /* Imprimir valores y poner icount=0*/
-              printf("IMPRIMIRR icount=%i iorb=%i nstep=%i iii=%i jjj=%i\n",icount,iorb,nstep,iii,jjj);
-              fprintf(salida,"%lf %lf %lf %lf\n",e,fi,clambda[1],clambda[2]);
-              icount=0;
-              jjj=jjj+1;
-              return 0;
-              }
+           }
+        else
+           {
+           /* Llamar a runge con duffing */
+           runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+           }
+
+        if (icount==nstep)
+           {
+           /* Imprimir valores y poner icount=0*/
+           fprintf(salida,"%lf %lf %lf %lf\n",e,fi,clambda[1],clambda[2]);
+           icount=0;
+           }
+        else
+           {
+           /* Llamar a runge con duffing */
+           runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
            }
         } /* End if jjj */
     } /* End if iii */

@@ -26,6 +26,7 @@ c     y se ha introducido parameter (N=3,NN=12), definiendo x=0.
 c     Ok compila bien en Fortran Force en WXP
 c     Modificado 07-Ocrubre 2007
       x=0.
+      icount=0
 c     Abrimos fichero lectura datos entrada
       OPEN(1,FILE='entrada_lyap.dat')
       READ(1,*,end=205)v(1),v(2),pp,qq,d,z1
@@ -127,10 +128,9 @@ c        cum(k)=cum(k)+log(znorm(k))/log(2.)
       go to 11
       endif
       if (icount.eq.nstep) then
-      print *,nstep, icount
 c     write(10,204)e,fi,clambda(1),clambda(2)
       write(*,204)e,fi,clambda(1),clambda(2)
-      write(5,204)e,fi,clambda(1),clambda(2)
+C      write(5,204)e,fi,clambda(1),clambda(2)
       icount=0
       else
       go to 11

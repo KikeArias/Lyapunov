@@ -45,11 +45,11 @@ for (j=2;j<=n;j++)
         {
         v[n*k+j]=v[n*k+j]/znorm[j];
         }
-    for (k=1;k<=n;k++)
-        {
-        cum[k]=cum[k]+log(znorm[k]);
-        clambda[k]=cum[k]/x;
-        }
+    }
+for (k=1;k<=n;k++)
+    {
+    cum[k]=cum[k]+log(znorm[k]);
+    clambda[k]=cum[k]/x;
     }
 
 return 0;

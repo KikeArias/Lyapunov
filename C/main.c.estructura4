@@ -35,6 +35,7 @@ double h;
 double *p_Duffing; /* Vector con 8 doubles para pasar como parámetros a runge que se los pase a duffing sin 
                         tener una llamada a la función muy grande */
 int nstep,icount;
+int en_bucle=0;
  
 FILE *entrada, *salida;
 
@@ -144,7 +145,7 @@ for (iii=0;iii<=npx;iii++)
             gsc[i]=0.0;
             }
         x=0;
-
+        
         runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
         icount=icount+1;
         while ((icount%iorb)!=0)

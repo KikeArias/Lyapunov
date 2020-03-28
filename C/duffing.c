@@ -15,7 +15,10 @@ f[3]= w;
 for (i=0;i<=2;i++)
     {
     f[i+4]=v[i+7];
-    f[i+7]=(1-3*b*(v[1]*v[1])*(1+e*cos(pp*v[3]/qq+fi)))*v[i+4]-d*v[i+7]+((pp/qq)*b*e*(v[1]*v[1]*v[1])*sin(pp*v[3]/qq+fi))*v[i+10]-z1*sin(v[3])*v[i+10];
+    aux1=-3*b*v[1]*v[1];
+    aux2=pp*v[3]/qq+fi;
+    aux3=(pp/qq)*b*e*(v[1]*v[1]*v[1]);
+    f[i+7]=(1+aux1*(1+e*cos(aux2)))*v[i+4]-d*v[i+7]+aux3*sin(aux2)*v[i+10]-z1*sin(v[3])*v[i+10];
     f[i+10]=0.0;
     }
 return 0;

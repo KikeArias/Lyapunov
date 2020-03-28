@@ -108,4 +108,15 @@ Lo que se hará a continuación es comprobar que f_clambda funciona correctament
 .- Antes de fclambda comprobar que las estructuras de datos tienen los datos correctos. En caso negativo, runge y duffing están fallando.
 .- Tracear fclambda una vez runge y duffing sea correcto.
 
+28/03/2020
+
+He hech algún cambio como introducir una variable que corte el bucle ya que sólo cuando salga del bucle ha de 
+cambiar las variables del bucle jjj e iii. Estos nuevos cambios están en main.c.estructura5
+
+Sorpresivamente, para la primera vuelta completa del código, esto es tras >51000 iteraciones (nstep) el código funciona
+correctamente. Sin embargo, para la segunda, que además coincide con el cambio de iii de valor, ya no sale correcto
+proporcionando un valor nan.
+
+Repasar eso revisando el código detenidamente por si se me ha escapado alguna división errónea o similar..
+
 

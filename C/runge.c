@@ -1,10 +1,12 @@
 #include "memoryfun.h"
+#include "stdio.h"
+
 int duffing(double *v, double *f,double b, double d, double z1,double e, double pp, double qq,double fi, double w);
 
 int runge (int n, double *y, double *f, double *x, double h,double *p_Duffing)
 {
 int i,j;
-int xaux;
+double xaux;
 double b,d,z1,e,pp,qq,fi,w; /* Para Duffing */
 double savey[n+1], phi[n+1];
 
@@ -30,6 +32,7 @@ for (j=1;j<=n;j++)
     phi[j]=f[j];
     y[j]=savey[j]+0.5*h*f[j];
     }
+xaux=xaux+0.5*h;
 duffing(y,f,b,d,z1,e,pp,qq,fi,w);
 
 // Paso 3

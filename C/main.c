@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "memoryfun.h"
 
-int runge (int n, double *y, double *f, double *x, double h,double *p_Duffing);
+int runge (int n, double *y, double *f, double *x, double h,double *p_Duffing, int paso);
 int f_clambda(int n, double *znorm, double *v, double *gsc, double *cum, double x, double *clambda);
 
 int main(int argc, char **argv)
@@ -146,7 +146,11 @@ for (iii=0;iii<=npx;)
         en_bucle=0;
         while (en_bucle==0)
               {
-              runge (NN,v,f,&x,h,p_Duffing); /* Duffing se llamará desde runge. */
+              if (iii==1) 
+                 {
+                 return 0;
+                 }
+              runge (NN,v,f,&x,h,p_Duffing,iii); /* Duffing se llamará desde runge. */
               icount=icount+1;
 
               if ((icount%iorb)==0) /* Si sale por que se cumple el mçodulo */

@@ -3,7 +3,7 @@
 
 int duffing(double *v, double *f,double b, double d, double z1,double e, double pp, double qq,double fi, double w);
 
-int runge (int n, double *y, double *f, double *x, double h,double *p_Duffing)
+int runge (int n, double *y, double *f, double *x, double h,double *p_Duffing, int paso)
 {
 int i,j;
 double xaux;
@@ -23,8 +23,10 @@ w=p_Duffing[7];
 xaux=*x;
 
 // Paso 1
-duffing(y,f,b,d,z1,e,pp,qq,fi,w);
+if (paso==1)
+   return 0;
 
+duffing(y,f,b,d,z1,e,pp,qq,fi,w);
 // Paso 2
 for (j=1;j<=n;j++)
     {

@@ -120,3 +120,13 @@ proporcionando un valor nan.
 Repasar eso revisando el código detenidamente por si se me ha escapado alguna división errónea o similar..
 
 
+29/03/2020
+
+He ido indagando y lo principal es que el valor de v sea el exacto puesto (aproximadamente) puesto que todas las 
+variables dependen de ese valor de v. Por ejemplo, en primera instancia depende f en duffing, luego znorm, cum, gsc
+en clambda, etc.
+
+Una idea que implementaré mañana será la de hacer un código equivalente al de C pero en fortran para evitar 
+excesivos cambios.
+
+

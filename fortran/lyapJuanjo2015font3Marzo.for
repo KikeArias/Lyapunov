@@ -73,6 +73,9 @@ c     INICIALIZAR VARIABLES
  212  continue
       x=0.
 c     Llamada a la funcion RUNGE-KUTTA de cuarto orden
+      if (iii.eq.1) then
+         stop
+      endif
   11  k=runge(NN, v, f, x, h )
 c     si k#1,calculo de los valores de las derivadas....
       if (k.ne.1) go to 13

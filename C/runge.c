@@ -59,7 +59,7 @@ duffing(y,f,b,d,z1,e,pp,qq,fi,w);
      {
      y[j]=savey[j]+(phi[j]+f[j])*h/6.0;
      }
-duffing(y,f,b,d,z1,e,pp,qq,fi,w);
+//duffing(y,f,b,d,z1,e,pp,qq,fi,w);
 
 *x=xaux+0.5*h;
 

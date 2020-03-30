@@ -15,8 +15,6 @@ c     P RL 86, 1737 (2001)
       double precision pp,qq,d,z1,e,fi
       double precision emin,emax
       double precision fmin,fimax
-c     d=0.154
-c     z1=0.095
       b=4.
       dospi=4.*1.570796326794897
       peri=dospi/1.1
@@ -25,8 +23,7 @@ c     Se ha sacado del programa de ricardo parameter (N=3,NN=12,X1=0.)
 c     y se ha introducido parameter (N=3,NN=12), definiendo x=0.
 c     Ok compila bien en Fortran Force en WXP
 c     Modificado 07-Ocrubre 2007
-      x=0.
-      icount=0
+C      x=0.
 c     Abrimos fichero lectura datos entrada
       OPEN(1,FILE='entrada_lyap.dat')
       READ(1,*,end=205)v(1),v(2),pp,qq,d,z1
@@ -36,32 +33,17 @@ c     Abrimos fichero lectura datos entrada
  205  CLOSE(1)
       open(5,file='lyamap.dat')
       
-c     La mandanga del fichero 10, sustituye a la salida por pantalla
-
-c     open(10,file='repetido.dat')
-      
       h=peri/(1.*nporbit)
       nstep=norbit*nporbit
       iorb=nporbit/iorb
-c     write(*,*)'Diagrama de bifurcaci¢n'
-c     write(*,*)'emin,emax,valores entre emin y emax'
-c      np->ptos entre m=0 y m=1
-c      read(*,*)emin,emax,npx
-c     write(*,*)
-c      write(*,*)'fimin,fimax,valores entre fimin y fimax'
-c     np->ptos entre m=0 y m=1
-c     read(*,*)fimin,fimax,npy
-c     write(*,*)'CALCULANDO'
-c      open(5,file='lyamap.dat')
-c      h=peri/(1.*nporbit)
-c     nstep=norbit*nporbit
+      icount=0
       Do 235 iii=0,npx
       e=emin+iii*(emax-emin)/(1.*npx)
       Do 234 jjj=0,npy 
       fi=fimin+jjj*(fimax-fimin)/(1.*npy)
       h=peri/(1.*nporbit)
 c     INICIALIZAR VARIABLES
-      v(3)=0.
+      v(3)=0.0
       do 102 i=N+1,NN
        v(i)=0.
  102  continue
@@ -73,11 +55,14 @@ c     INICIALIZAR VARIABLES
  212  continue
       x=0.
 c     Llamada a la funcion RUNGE-KUTTA de cuarto orden
-  11  k=runge(NN, v, f, x, h )
+      loop=0
+      Do WHILE (loop.eq.0)
+      k=runge(NN, v, f, x, h )
 c     si k#1,calculo de los valores de las derivadas....
-      if (k.ne.1) go to 13
+      if (k.eq.1) then
 
 C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
+C      call duffing(NN,v,f,b,d,z1,e,pp,qq,fi,W)
       f(1)= v(2)
       f(2)=v(1)-b*v(1)**3-d*v(2)+z1*DCOS(v(3))
      *-b*e*(v(1)**3)*DCOS(pp*v(3)/qq+fi)
@@ -89,11 +74,12 @@ C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
      *-z1*DSIN(v(3))*v(i+10)
       f(i+10)= 0.
   101 continue
-      
-      go to 11
+
+      else
   13  icount=icount+1
       if (mod(icount,iorb).eq.0) then
-      znorm(1)=0.
+C         call f_clambda(N,NN,x,v,znorm,gsc,cum,clambda)
+      znorm(1)=0.0
       do 30 j=1,n
 	znorm(1)=znorm(1)+v(n*j+1)**2
   30  continue
@@ -120,33 +106,23 @@ C     DUFFING FORZADO Y EXCITADO PARAMETRICAMENTE
 	v(n*k+j)=v(n*k+j)/znorm(j)
   80   continue
        do 90 k=1,n
-c        cum(k)=cum(k)+log(znorm(k))/log(2.)
 	 cum(k)=cum(k)+log(znorm(k))
-	 clambda(k)=cum(k)/x
+         clambda(k)=cum(k)/x
   90  continue
-      else
-      go to 11
-      endif
       if (icount.eq.nstep) then
-c     write(10,204)e,fi,clambda(1),clambda(2)
       write(*,204)e,fi,clambda(1),clambda(2)
-C      write(5,204)e,fi,clambda(1),clambda(2)
+      write(5,204)e,fi,clambda(1),clambda(2)
       icount=0
-      else
-      go to 11
+      loop=1
       endif
+      endif
+      endif
+
+C     END of WHILE
+      END DO 
   234 continue
   235 continue
       close(5)
-c      write(*,*)'Programa finalizado'
-c     Formatos de entrada y salida.....
-c 202 format(I7,f10.2,2e12.5,1e10.3)
-c 202 format(4f24.7)
-c 204 format(2f12.5,2e12.5)
-c Cambiamos formato de salida format(2f12.5,2e12.5)
-c Cambiamos formato de salida format(2f12.5,2e16.5)
-c 204 format(2f12.5,2e12.5)
-c 204 format(2f14.7,2f24.12)
   204 format(2f14.5,2e16.5)
       end
 
@@ -188,3 +164,4 @@ c     paso 5
       runge=0.
       return
       end
+

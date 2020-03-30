@@ -130,3 +130,31 @@ Una idea que implementaré mañana será la de hacer un código equivalente al d
 excesivos cambios.
 
 
+30/03/2020
+
+Como indicaba el día anterior, he implementado en fortran la misma estructura que tenía en C y el valor es correcto. 
+Está almacenado en fortran_Kike/main.for.estructura6. De esta manera hemos evitado los engorrosos goto.
+
+He de decir que debido a cómo está implementado el código es muy complicado hacer un código más óptimo, es decir, de 
+han definido variables con un tipo por defecto, no sé si eso es lo que realmente se quería o simplemente es 
+desconocimiento de programación, pero como indico resulta casi imposible el introducir muchos cambios pues los 
+resultados están cogidos con pinzas. En cualquier caso, voy a intentar poder sustituir código por llamadas a funciones
+así como una correcta indexación.
+
+He intentado que Duffing y el cálculo de clambda se realice en unas 
+subrutinas aparte. Sin embargo, el resultado no sale correcto. 
+De nuevo puede ser por el código que funciona de casualidad y que está
+cogido por pinzas.
+
+Los esfuerzos se harán en indexar y comentar el código de cara a dejarlo
+más claro. 
+
+Reitero que una cosa positiva es el haber sido capaz de quitar los 
+goto ya que ahora el código es más legible. 
+
+Una vez finalizada la indexación y demás (definir las variables de 
+manera correcto no con el implicit a ver si funciona) estudiar la 
+posibilidad de la paralelización tras realizar una prueba y ver el tiempo
+que realmente se tarda.
+
+

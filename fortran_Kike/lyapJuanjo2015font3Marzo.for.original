@@ -26,7 +26,6 @@ c     y se ha introducido parameter (N=3,NN=12), definiendo x=0.
 c     Ok compila bien en Fortran Force en WXP
 c     Modificado 07-Ocrubre 2007
       x=0.
-      icount=0
 c     Abrimos fichero lectura datos entrada
       OPEN(1,FILE='entrada_lyap.dat')
       READ(1,*,end=205)v(1),v(2),pp,qq,d,z1
@@ -55,14 +54,16 @@ c     write(*,*)'CALCULANDO'
 c      open(5,file='lyamap.dat')
 c      h=peri/(1.*nporbit)
 c     nstep=norbit*nporbit
-      Do 235 iii=0,npx
+C      Do 235 iii=0,npx
+      Do 235 iii=0,0.0001
       e=emin+iii*(emax-emin)/(1.*npx)
-      Do 234 jjj=0,npy 
+C      Do 234 jjj=0,npy 
+      Do 234 jjj=0,2
       fi=fimin+jjj*(fimax-fimin)/(1.*npy)
       h=peri/(1.*nporbit)
 c     INICIALIZAR VARIABLES
       v(3)=0.
-      do 102 i=N+1,NN
+     do 102 i=N+1,NN
        v(i)=0.
  102  continue
       do 212 i=1,N
@@ -130,7 +131,7 @@ c        cum(k)=cum(k)+log(znorm(k))/log(2.)
       if (icount.eq.nstep) then
 c     write(10,204)e,fi,clambda(1),clambda(2)
       write(*,204)e,fi,clambda(1),clambda(2)
-C      write(5,204)e,fi,clambda(1),clambda(2)
+      write(5,204)e,fi,clambda(1),clambda(2)
       icount=0
       else
       go to 11

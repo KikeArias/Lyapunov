@@ -18,9 +18,6 @@ C     Actualizacion: Enrique Arias Antunez, 31/03/2020
       double precision pp,qq,d,z1,e,fi
       double precision emin,emax
       double precision fmin,fimax
-      real time_begin, time_end
-
-      call cpu_time(time_begin)
       b=4.
       dospi=4.*1.570796326794897
       peri=dospi/1.1
@@ -158,8 +155,7 @@ C        end jjj
          end do
 C     end iii
       end do
-      call cpu_time (time_end)
-      PRINT *, 'Time of operation was ',time_end-time_begin,' seconds'
+
       close(5)
   204 format(2f14.5,2e16.5)
 C     end program

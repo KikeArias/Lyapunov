@@ -157,4 +157,11 @@ manera correcto no con el implicit a ver si funciona) estudiar la
 posibilidad de la paralelización tras realizar una prueba y ver el tiempo
 que realmente se tarda.
 
+31/03/2020
+
+En la version main.for.estructura7 ya se ha indentado y quitado los numero para los do. No se ha podido quitar el 
+goto de runge puesto que se podría hacer con un switch (en fortran select) pero esta estructura apareció a 
+partir de f90/f95 no para f77.
+
+En principio esa es la opción que vamos a dejar. Voy a tomar tiempos con el fichero de entrada original.
 

@@ -165,3 +165,6 @@ partir de f90/f95 no para f77.
 
 En principio esa es la opción que vamos a dejar. Voy a tomar tiempos con el fichero de entrada original.
 
+He introducido una última modificación intentando quitar las definiciones implícitas de real*8. He quitado algunas, 
+pero resulta prácticamente imposible. Y más generar funciones como duffing y clambda. Esto denota una mala praxis de 
+programación. Pero así se queda. Está en main.for.estructura8 en fortran_Kike

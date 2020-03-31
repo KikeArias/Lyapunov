@@ -3,8 +3,8 @@
       integer n,nn
       integer j,k,l
       real*8 x
-      real*8 znorm(*),gsc(*),cum(*),clambda(*)
-      real*8 v(*)
+      real*8 znorm(n),gsc(n),cum(n),clambda(n)
+      real*8 v(nn)
 
       znorm(1)=0.
       do 30 j=1,n
